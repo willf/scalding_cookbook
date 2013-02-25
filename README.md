@@ -38,8 +38,8 @@ class WordCountJob(args : Args) extends Job(args) {
 }
 ```
 
-**Convert TSV file to another TSV file format** Same number of lines, mapping some function, over the lines, and
-projecting out a certain set of columns.
+**Convert TSV file to another TSV file format** Same number of lines, mapping some function over the lines, and
+projecting out a certain set of columns. This could be written as map(fn).project(columns), but mapTo is ``more efficient.''
 
 ```scala
 import com.twitter.scalding._
