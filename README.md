@@ -45,11 +45,12 @@ projecting out a certain set of columns.
 import com.twitter.scalding._
 
 // input (tsv)
-// 0    1   2   3     4   5   6
-//22  kinds	of	love	nn2	io	nn1
-//12	large	green	eyes	jj	jj	nn2
+// 0   1     2     3    4   5   6
+// 22  kinds of	   love	nn2 io  nn1
+// 12  large green eyes	jj  jj  nn2
+//
 // output (tsv)
-// 22 of kinds/nn2_love/nn1
+// 22 of    kinds/nn2_love/nn1
 // 12 green large/jj_eyes/nn2
 
 class contextCountJob(args : Args) extends Job(args) {
