@@ -37,3 +37,31 @@ class WordCountJob(args : Args) extends Job(args) {
   }
 }
 ```
+
+**Convert TSV file to another TSV file format** Same number of lines, mapping some function, over the lines, and
+projecting out a certain set of columns.
+
+```scala
+import com.twitter.scalding._
+
+// input (tsv)
+// 0    1   2   3     4   5   6
+//22  kinds	of	love	nn2	io	nn1
+//12	large	green	eyes	jj	jj	nn2
+// output (tsv)
+// 22 of kinds/nn2_love/nn1
+// 12 green large/jj_eyes/nn2
+
+class contextCountJob(args : Args) extends Job(args) {
+	val inSchema = ('count, 'w1 ,'w2, 'w3, 'pos1, 'pos2, 'pos3)
+	val outSchema = ('count, 'word, 'context)
+  Tsv(args("input"),inSchema)
+    .mapTo(inSchema -> outSchema) { parts : (String, String, String, String, String, String, String) => {
+    	  val (count, w1, w2, w3, pos1, pos2, pos3) = parts
+    		val context = "%s/%s_%s/%s".format(w1,pos1,w2,pos2)
+    		(count, w2, context)
+    	}
+    }
+    .write(Tsv(args("output")))
+  }
+```
