@@ -59,7 +59,7 @@ class contextCountJob(args : Args) extends Job(args) {
   Tsv(args("input"),inSchema)
     .mapTo(inSchema -> outSchema) { parts : (String, String, String, String, String, String, String) => {
     	  val (count, w1, w2, w3, pos1, pos2, pos3) = parts
-    		val context = "%s/%s_%s/%s".format(w1,pos1,w2,pos2)
+    		val context = "%s/%s_%s/%s".format(w1,pos1,w3,pos3)
     		(count, w2, context)
     	}
     }
