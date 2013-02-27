@@ -67,3 +67,40 @@ class contextCountJob(args : Args) extends Job(args) {
     .write(Tsv(args("output")))
   }
 ```
+**Limit or sample the data**  Sometimes, you want to do limit the data you process (for example, in order to 
+do a quick check to see if the output is what you expect. Sometimes, you want to sample a percentage of the data
+(for example, to create an evaluation set). Use ```limit``` to limit the data (this is much like Scala's
+```take```), or ```sample``` to sample it. 
+
+A couple of notes:
+1. You have to run this job using either hds, or hds-local (this is a limit of Cascading, the underlying system)
+2. Jobs with small limits will not take long to run, but jobs with a sample size set will take as long as processing the entire set
+3. Limit takes an integer (the number of items to take)
+4. Sample takes a double between 0.0 and 1.0, which is the percentage to take. If the number is greater than 1.0, it's treated as 100%
+5. Sample is currently only in the develop branch of Scalding
+
+***Limit*** example
+```scala
+import com.twitter.scalding._
+
+class WordCountJob(args : Args) extends Job(args) {
+  TextLine(args("input"))
+    .limit(args("limit").toInt)
+    .flatMap('line -> 'word) { line : String => line.split("\\s+") }
+    .groupBy('word) { _.size }
+    .write(Tsv(args("output")))
+}
+```
+
+***Sample*** example
+```scala
+import com.twitter.scalding._
+
+class WordCountJob(args : Args) extends Job(args) {
+  TextLine(args("input"))
+    .limit(args("sample").toDouble)
+    .flatMap('line -> 'word) { line : String => line.split("\\s+") }
+    .groupBy('word) { _.size }
+    .write(Tsv(args("output")))
+}
+```
