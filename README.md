@@ -5,7 +5,8 @@ Scalding Cookbook
 [Cascading](http://www.cascading.org/), which is a Java API for Hadoop. 
 "Hadoop is a distributed system for counting words."
 
-Here are some recipes.
+Here are some recipes. If you want to add a recipe, create a pull request, and I'll
+likely add it.
 
 **Word Count** Splits on one or more whitespace
 
