@@ -73,6 +73,7 @@ do a quick check to see if the output is what you expect. Sometimes, you want to
 ```take```), or ```sample``` to sample it. 
 
 A couple of notes:
+
 1. You have to run this job using either hds, or hds-local (this is a limit of Cascading, the underlying system)
 2. Jobs with small limits will not take long to run, but jobs with a sample size set will take as long as processing the entire set
 3. Limit takes an integer (the number of items to take)
